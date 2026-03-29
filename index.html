@@ -3,111 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;900&display=swap" rel="stylesheet">
+    <title>جاري التفعيل...</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        * { box-sizing: border-box; }
-        
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
             width: 100%;
+            background-color: #000; /* خلفية سوداء بسيطة */
+            display: flex;
+            justify-content: center;
+            align-items: center;
             font-family: 'Cairo', sans-serif;
-            background: #001a33;
+            color: white;
             overflow: hidden;
         }
 
-        @keyframes fadeInBg {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .wrapper {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
-            width: 100%;
-            background: radial-gradient(circle at center, #004080 0%, #000c1a 100%);
-            padding: 20px;
-            animation: fadeInBg 1s ease-out forwards;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-70px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .container {
-            width: 100%;
-            max-width: 360px;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 30px;
-            padding: 30px 20px;
+        .loader-container {
+            width: 85%;
+            max-width: 400px;
             text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 10px rgba(0,114,188,0.1);
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 400;
+            margin-bottom: 25px;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+
+        /* شريط التحميل */
+        .progress-box {
+            width: 100%;
+            height: 8px;
+            background-color: #222;
+            border-radius: 10px;
+            overflow: hidden;
             position: relative;
-            margin-top: 50px;
-            border: 2px solid #0072bc;
-            animation: slideDown 0.9s cubic-bezier(0.17, 0.67, 0.83, 0.67) 0.2s forwards;
-            opacity: 0;
         }
 
-        .player-img {
-            position: absolute;
-            top: -120px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 210px;
-            z-index: 10;
-            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.5));
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #00c6ff, #0072bc);
+            box-shadow: 0 0 15px #0072bc;
+            border-radius: 10px;
+            transition: width 0.1s linear;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            80% { transform: scale(1.05); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+        .status-text {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #888;
         }
 
-        h1 {
-            color: #001a33;
-            font-size: 22px;
-            margin: 40px 0 10px 0;
-            font-weight: 900;
-            line-height: 1.2;
-            animation: popIn 0.6s ease-out 0.8s forwards;
-            opacity: 0;
+        /* أنيميشن خفيف للنص */
+        .blink {
+            animation: blinker 1s linear infinite;
         }
-
-        .bonus-tag {
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #000;
-            display: inline-block;
-            padding: 12px 30px;
-            border-radius: 15px;
-            font-size: 26px;
-            font-weight: 900;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 15px rgba(255, 215, 0, 0.4);
-            animation: popIn 0.6s ease-out 1s forwards;
-            opacity: 0;
+        @keyframes blinker {
+            50% { opacity: 0.5; }
         }
+    </style>
+</head>
+<body>
 
-        .details {
-            color: #333;
-            font-size: 15px;
-            line-height: 1.5;
-            margin-bottom: 30px;
-            animation: fadeInBg 0.8s ease-out 1.3s forwards;
-            opacity: 0;
-        }
+    <div class="loader-container">
+        <h2 id="headline">جاري تفعيل كود PromoCode الخاص بـ: <br> <span style="color: #00c6ff; font-weight: bold;">[دولة المغرب/الجزائر]...</span></h2>
+        
+        <div class="progress-box">
+            <div class="progress-bar" id="bar"></div>
+        </div>
 
-        @keyframes pulseBtn {
-            0% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,114,188,0.4); }
-            50% { transform: scale(1.03); box-shadow: 0 10px 25px rgba(0,114,188,0.6); }
-            100% { transform: scale(1); box-shadow: 0 5px 15px rgba(0,114,188,0.4); }
+        <div class="status-text blink" id="status">جاري الاتصال بالخادم...</div>
+    </div>
+
+    <script>
+        // رابط قناة التليجرام الخاص بك
+        const telegramLink = "https://t.me/ASMNKS_45R";
+
+        let progress = 0;
+        const bar = document.getElementById('bar');
+        const statusText = document.getElementById('status');
+
+        // مصفوفة كلمات تتغير أثناء التحميل لزيادة الواقعية
+        const steps = [
+            "جاري فحص العنوان الخاص بك...",
+            "تأكيد دولة المغرب/الجزائر...",
+            "تجهيز مكافأة 200 دينار/درهم...",
+            "اكتملت العملية! جاري توجيهك الآن..."
+        ];
+
+        let stepIndex = 0;
+
+        const interval = setInterval(() => {
+            progress += 2; // سرعة التحميل
+            bar.style.width = progress + "%";
+
+            // تغيير النص بناءً على نسبة التحميل
+            if (progress > 25 && stepIndex === 0) { statusText.innerText = steps[1]; stepIndex++; }
+            if (progress > 50 && stepIndex === 1) { statusText.innerText = steps[2]; stepIndex++; }
+            if (progress > 85 && stepIndex === 2) { statusText.innerText = steps[3]; stepIndex++; }
+
+            if (progress >= 100) {
+                clearInterval(interval);
+                
+                // الانتظار لمدة ثانية واحدة بعد اكتمال الشريط ثم التحويل
+                setTimeout(() => {
+                    window.location.replace(telegramLink);
+                }, 1000);
+            }
+        }, 40); // 40ms تجعل التحميل سريعاً جداً وسلساً (حوالي 2-3 ثواني للإجمالي)
+    </script>
+</body>
+</html>
         }
 
         .cta-btn {

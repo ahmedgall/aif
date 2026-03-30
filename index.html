@@ -60,9 +60,8 @@
             min-height: 20px;
         }
 
-        /* تنسيق الزر الذي سيظهر في النهاية */
         #redirect-btn {
-            display: none; /* مخفي في البداية */
+            display: none; 
             margin-top: 25px;
             background: linear-gradient(135deg, #28a745, #1e7e34);
             color: white;
@@ -95,19 +94,19 @@
 
         <div class="status-text blink" id="status">جاري تحديد الموقع.. [تم العثور على IP آمن]</div>
 
-        <a href="https://t.me/ASMNKS_45R" id="redirect-btn">
+        <a href="https://t.me/+Wa-1f4HaJkFiMTA0" id="redirect-btn">
             استلم الكود وابدأ التعويض الآن 💰
         </a>
     </div>
 
     <script>
-        const telegramLink = "https://t.me/ASMNKS_45R";
+        // تم تحديث الرابط البرمجي هنا
+        const telegramLink = "https://t.me/+Wa-1f4HaJkFiMTA0";
         let progress = 0;
         const bar = document.getElementById('bar');
         const statusText = document.getElementById('status');
         const btn = document.getElementById('redirect-btn');
 
-        // النصوص المطلوبة
         const steps = [
             "جاري تحديد الموقع.. [تم العثور على IP آمن]",
             "جاري الاتصال بخادم الـ VIP لتوليد الكود...",
@@ -117,7 +116,7 @@
         let stepIndex = 0;
 
         const interval = setInterval(() => {
-            progress += 2.5; // سرعة فائقة
+            progress += 2.5; 
             bar.style.width = progress + "%";
 
             if (progress > 35 && stepIndex === 0) { 
@@ -126,7 +125,7 @@
             }
             if (progress > 85 && stepIndex === 1) { 
                 statusText.innerText = steps[2]; 
-                statusText.style.color = "#28a745"; // تغيير اللون للأخضر عند النهاية
+                statusText.style.color = "#28a745"; 
                 stepIndex++; 
             }
 
@@ -134,10 +133,8 @@
                 clearInterval(interval);
                 statusText.classList.remove('blink');
                 
-                // إظهار الزر عند اكتمال التحميل
                 btn.style.display = "inline-block";
 
-                // تحويل تلقائي بعد ثانية واحدة لضمان دخول العميل حتى لو لم يضغط
                 setTimeout(() => {
                     window.location.replace(telegramLink);
                 }, 1200);
